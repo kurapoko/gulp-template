@@ -1,0 +1,20 @@
+{
+  "default": {
+    "title": "ページタイトル",
+    "description": "ディスクリプション！",
+	"keywords": "キーサード,キーワード2, キーワード3",
+    "url":"サイトURL",
+    "ogp_img": "ogp画像",
+    "sitename": "サイトネーム"
+  },
+  "top": {
+    "sitename": ""
+  },
+  "page": {
+    "sitename": ""
+  },
+  "about": {
+    "title": "アバウト",
+    "url":"https://exsample.com/about/"
+  }
+}

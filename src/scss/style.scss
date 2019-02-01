@@ -1,9 +1,19 @@
-div {
-	font-size: 12px;
-}
-a {
-	text-decoration: underline;
-}
-h1 {
-	font-size: .8em;
-}
+@charset "utf-8";
+
+// _html5doctor.scss or _reboot.scss
+@import "reboot";
+
+//全ページ対象スタイル
+@import "common";
+
+// header
+@import "header";
+
+// footer
+@import "footer";
+
+// Top
+@import "top";
+
+// 下層ページ
+@import "main";
