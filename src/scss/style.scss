@@ -1,19 +1,27 @@
+// ********************************************************************************************
+//
+// style.scss
+//
+// ********************************************************************************************
 @charset "utf-8";
 
-// _html5doctor.scss or _reboot.scss
-@import "reboot";
+// config
+// -------------------------------------------------------------------
+@import "config/variables";
+@import "config/mixin";
 
-//全ページ対象スタイル
-@import "common";
+// base
+// -------------------------------------------------------------------
+@import "base/reset";
+@import "base/base";
 
-// header
-@import "header";
+// Layout
+// -------------------------------------------------------------------
+@import "layout/common";
+@import "layout/header";
+@import "layout/footer";
 
-// footer
-@import "footer";
 
-// Top
-@import "top";
-
-// 下層ページ
-@import "main";
+// pages
+// -------------------------------------------------------------------
+@import "pages/top";
