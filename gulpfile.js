@@ -8,6 +8,8 @@ const rename = require('gulp-rename');
 const prefix  = require('gulp-autoprefixer');
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
+const spritesmith = require('gulp.spritesmith');
+const imagemin = require('gulp-imagemin');
 const browserSync = require('browser-sync').create();
 
 // SASSの設定
@@ -23,13 +25,41 @@ gulp.task('sass', function(done) {
     .pipe(gulp.dest('./dist/assets/css/'))
     done();
 });
+
 // EJS
 gulp.task('ejs', function(done) {
     gulp.src(['./src/html/**/*.ejs', '!./src/html/**/_*.ejs'])
     .pipe(rename({extname: '.html'}))
-    .pipe(gulp.dest('./build/html/'))
+    .pipe(gulp.dest('./dist/'))
     done();
 });
+
+// CSS-SPRITE
+gulp.task('spritesmith', function(done) {
+  // スプライトにする画像パス
+  const spriteData = gulp.src(['./src/images/sprite/**/*.png'])
+  .pipe(spritesmith({
+    imgName: 'sprite.png', // 生成するスプライト画像の名前
+    cssName: '_sprite.scss',
+    imgPath: './dist/assets/images/sprite.png',
+    cssFormat: 'scss',
+    cssVarMap: function (sprite) {
+      sprite.name = 'sprite-' + sprite.name;
+    }
+  }));
+  spriteData.img.pipe(gulp.dest('./dist/assets/images/'));
+  spriteData.css.pipe(gulp.dest('./src/scss/parts/'));
+  done();
+});
+
+//画像圧縮
+gulp.task('imagemin', function(done) {
+   gulp.src('./src/images/*')
+   .pipe(imagemin())
+   .pipe(gulp.dest('./dist/assets/images/'))
+   done();
+});
+
 // Browser-syncの設定
 // ブラウザ画面への通知を無効化
 gulp.task('sync', function() {
