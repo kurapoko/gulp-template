@@ -3,17 +3,6 @@
 // mixin.scss
 //
 // ********************************************************************************************
-
-@mixin sp {
-	@media (max-width: 767px) {
-		@content;
-	}
-}
-@mixin pc {
-	@media (min-width: 768px) {
-		@content;
-	}
-}
 // placeholderのベンダープレフィックス
 @mixin placeholder {
     &:placeholder-shown {
@@ -34,48 +23,24 @@
         @content;
     }
 }
-// プロパティにベンダープレフィックスを付与
-@mixin PropertyPrefix ($name, $value) {
-	@each $prefix in $set-prefix {
-		#{$prefix}#{$name}: $value;
-	}
-}
-// 値にベンダープレフィックスを付与
-@mixin ValuePrefix($name, $value) {
-	@each $prefix in $set-prefix {
-		#{$name}: #{$prefix}$value;
-	}
-}
-
-@mixin clearfix {
-    &::after {
-        content: "";
-        clear: both;
-        display: block; 
-    }
-}
-@mixin pcDisp {
-	display: block;
-	@include sp {
-		display: none;
-	}
-}
-@mixin spDisp {
-	display: none;
-	@include sp {
-		display: block;
-	}
-}
 @mixin textImage {
 	display: block;
 	text-indent: 100%;
 	white-space: nowrap;
 	overflow: hidden;
 }
-
 @mixin textIndent {
 	text-indent: -1em;
 	padding-left: 1em;
+}
+// vw計算
+@function get_vw($size, $viewport: 320) {
+	$rate: 100 / $viewport;
+	@return $rate * $size * 1vw;
+}
+@mixin fz_vw($font_size: 10) {
+	font-size: $font_size * 1px;
+	font-size: get_vw($font_size);
 }
 $spaceClass: true !default;
 $endValue: 20 !default;
@@ -112,12 +77,4 @@ $endValue: 20 !default;
 		}
 	}
 }
-// vw計算
-@function get_vw($size, $viewport: 320) {
-	$rate: 100 / $viewport;
-	@return $rate * $size * 1vw;
-}
-@mixin fz_vw($font_size: 10) {
-	font-size: $font_size * 1px;
-	font-size: get_vw($font_size);
-}
+

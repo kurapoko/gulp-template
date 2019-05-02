@@ -7,13 +7,15 @@
 
 // config
 // -------------------------------------------------------------------
+@import "config/reset";
 @import "config/variables";
+@import "config/mediaqueries";
 @import "config/mixin";
+@import "config/base";
 
-// base
+// parts
 // -------------------------------------------------------------------
-@import "base/reset";
-@import "base/base";
+@import "parts/sprite";
 
 // Layout
 // -------------------------------------------------------------------

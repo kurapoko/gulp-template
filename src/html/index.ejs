@@ -1,5 +1,10 @@
-<%-
-  include('./include/_head', {
-    page: json['top']
-  });
-%>
+<%- include('./include/_head') %>
+<%- include('./include/_header') %>
+  <div class="wrapper">
+    <main class="main">
+      <section class="top">
+        <h1 class="top__title">title01</h1>
+      </section>
+    </main>
+  </div>
+  <%- include('./include/_footer') %>

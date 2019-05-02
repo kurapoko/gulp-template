@@ -4,6 +4,9 @@
 //
 // ********************************************************************************************
 .top {
-	width: 100%;
-	@include pcDisp;
+    &__title {
+        @include sprite($sprite-youtube_social_icon_red);
+        background-size: 100%;
+        font-size: 80px;
+    }
 }
