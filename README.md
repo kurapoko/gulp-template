@@ -39,7 +39,11 @@ Gulpをローカル環境にインストールする<br>
 	`npm install -D gulp imagemin-gifsicle`
 
 ## 上記プラグインを一括インストールするコマンド  
-	`npm install -D gulp require-dir gulp-sass gulp-sourcemaps gulp-autoprefixer gulp-watch gulp-plumber gulp-rename gulp-ejs fs browser-sync gulp-notify gulp.spritesmith gulp-imagemin imagemin-jpeg-recompress imagemin-pngquant imagemin-gifsicle`
+	npm install -D gulp require-dir gulp-sass gulp-sourcemaps gulp-autoprefixer gulp-watch gulp-plumber gulp-rename gulp-ejs fs browser-sync gulp-notify gulp.spritesmith gulp-imagemin imagemin-jpeg-recompress imagemin-pngquant imagemin-gifsicle
 
 ## タスクを実行する
-    `npx gulp`
+    npx gulp
+    
+## 一括で設定する場合は、
+ - 1.gulpfile.jsとpackage-lock.jsonとpackage.jsonとsrcディレクトリを配置する。
+ - 2.npm installコマンドを実行する。
