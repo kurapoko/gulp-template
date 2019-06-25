@@ -17,6 +17,8 @@ Gulpをローカル環境にインストールする<br>
 	`npm install -D gulp gulp-sass`<br>
 	`npm install -D gulp gulp-autoprefixer`<br>
 	`npm install -D gulp gulp-sourcemaps`
+- TypeScript<br>
+	`npm install -D gulp gulp-typescript`
 - json<br>
 	`npm install -D gulp fs`
 - 監視<br>
