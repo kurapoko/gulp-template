@@ -18,12 +18,13 @@ const imageminGif = require('imagemin-gifsicle');
 const browserSync = require('browser-sync').create();
 
 // ビルドディレクトリとアセットディレクトリ(状況に応じて書き換え)
-const Build = "build",
-      Assets = "assets";
+const Build = 'build',
+      Assets = 'assets',
+      imgDir = 'images';
 
 // SASSの設定
-gulp.task('sass', () => {
-    gulp.src('./src/scss/style.scss')
+gulp.task('sass', function (done) {
+    gulp.src(['./src/scss/**/*.scss', '!./src/scss/**/_*.scss'])
     // エラーしても処理を止めない
     .pipe(plumber())
     // ソースマップを作成
@@ -37,10 +38,11 @@ gulp.task('sass', () => {
     .pipe(gulp.dest('./' + Build + '/' + Assets + '/css/'))
     // CSSファイルのみリロードする
     .pipe(browserSync.stream())
+    done();
 });
 
 // TypeScriptの設定
-gulp.task('ts', () => {
+gulp.task('ts', function (done) {
     gulp.src('./src/typescript/**/*.ts')
     .pipe(ts({
         target: 'es5',
@@ -49,30 +51,34 @@ gulp.task('ts', () => {
     .pipe(gulp.dest('./' + Build + '/' + Assets + '/js/'))
     // jsファイルのみリロードする
     .pipe(browserSync.stream())
+    done();
 });
+
 // EJSの設定
-gulp.task('ejs', () => {
+gulp.task('ejs', function (done) {
     gulp.src(['./src/html/**/*.ejs', '!./src/html/**/_*.ejs'])
     .pipe(ejs())
     // 出力時の拡張子をhtmlにする
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('./' + Build + '/'))
+    .pipe(browserSync.stream())
+    done();
 });
 
 // CSS-SPRITE
-gulp.task('spritesmith', () => {
+gulp.task('spritesmith', function ()  {
   // スプライトにする画像パス
   const spriteData = gulp.src(['./src/images/sprite/**/*.png'])
   .pipe(spritesmith({
     imgName: 'sprite.png', // 生成するスプライト画像の名前
     cssName: '_sprite.scss',
-    imgPath: '/' + Assets + '/images/sprite.png',
+    imgPath: '/' + Assets + '/' + imgDir + '/sprite.png',
     cssFormat: 'scss',
     cssVarMap: function (sprite) {
       sprite.name = 'sprite-' + sprite.name;
     }
   }));
-  spriteData.img.pipe(gulp.dest('./dist/' + Assets + '/images/'));
+  spriteData.img.pipe(gulp.dest('./dist/' + Assets + '/' + imgDir + '/'));
   spriteData.css.pipe(gulp.dest('./src/scss/parts/'));
 });
 
@@ -89,7 +95,7 @@ gulp.task('imagemin', () => {
     })
   ]
   ))
-   .pipe(gulp.dest('./' + Build + '/' + Assets + '/images/'))
+   .pipe(gulp.dest('./' + Build + '/' + Assets + '/' + imgDir + '/'))
 });
 
 // Browser-syncの設定
@@ -105,8 +111,9 @@ gulp.task('sync', () => {
   });
 });
 
-gulp.task('reload', () => {
+gulp.task('reload', function (done)  {
   browserSync.reload();
+  done();
 });
 
 gulp.task('watch', () => {
@@ -116,4 +123,4 @@ gulp.task('watch', () => {
   gulp.watch(['./' + Build + '/**/*.html'], gulp.task('reload'));
 });
 
-gulp.task('default', gulp.series( gulp.parallel('sass', 'ts', 'ejs', 'sync', 'reload', 'watch', 'spritesmith', 'imagemin')));
+gulp.task('default', gulp.series( gulp.parallel('sass', 'ejs', 'sync', 'ts', 'reload', 'watch', 'spritesmith', 'imagemin')));
