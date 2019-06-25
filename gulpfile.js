@@ -4,6 +4,7 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
+const ts = require('gulp-typescript');
 const ejs = require('gulp-ejs');
 const rename = require('gulp-rename');
 const prefix  = require('gulp-autoprefixer');
@@ -16,8 +17,12 @@ const imageminPng = require('imagemin-pngquant');
 const imageminGif = require('imagemin-gifsicle');
 const browserSync = require('browser-sync').create();
 
+// ビルドディレクトリとアセットディレクトリ(状況に応じて書き換え)
+const Build = "build",
+      Assets = "assets";
+
 // SASSの設定
-gulp.task('sass', function(done) {
+gulp.task('sass', () => {
     gulp.src('./src/scss/style.scss')
     // エラーしても処理を止めない
     .pipe(plumber())
@@ -29,42 +34,50 @@ gulp.task('sass', function(done) {
       cascade: false
     }))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./dist/assets/css/'))
+    .pipe(gulp.dest('./' + Build + '/' + Assets + '/css/'))
     // CSSファイルのみリロードする
     .pipe(browserSync.stream())
-    done();
 });
 
-// EJS
-gulp.task('ejs', function(done) {
+// TypeScriptの設定
+gulp.task('ts', () => {
+    gulp.src('./src/typescript/**/*.ts')
+    .pipe(ts({
+        target: 'es5',
+        removeComments: true
+    }))
+    .pipe(gulp.dest('./' + Build + '/' + Assets + '/js/'))
+    // jsファイルのみリロードする
+    .pipe(browserSync.stream())
+});
+// EJSの設定
+gulp.task('ejs', () => {
     gulp.src(['./src/html/**/*.ejs', '!./src/html/**/_*.ejs'])
     .pipe(ejs())
     // 出力時の拡張子をhtmlにする
     .pipe(rename({extname: '.html'}))
-    .pipe(gulp.dest('./dist/'))
-    done();
+    .pipe(gulp.dest('./' + Build + '/'))
 });
 
 // CSS-SPRITE
-gulp.task('spritesmith', function(done) {
+gulp.task('spritesmith', () => {
   // スプライトにする画像パス
   const spriteData = gulp.src(['./src/images/sprite/**/*.png'])
   .pipe(spritesmith({
     imgName: 'sprite.png', // 生成するスプライト画像の名前
     cssName: '_sprite.scss',
-    imgPath: '/assets/images/sprite.png',
+    imgPath: '/' + Assets + '/images/sprite.png',
     cssFormat: 'scss',
     cssVarMap: function (sprite) {
       sprite.name = 'sprite-' + sprite.name;
     }
   }));
-  spriteData.img.pipe(gulp.dest('./dist/assets/images/'));
+  spriteData.img.pipe(gulp.dest('./dist/' + Assets + '/images/'));
   spriteData.css.pipe(gulp.dest('./src/scss/parts/'));
-  done();
 });
 
 //画像圧縮(jpg|jpeg|png|gif)
-gulp.task('imagemin', function(done) {
+gulp.task('imagemin', () => {
    gulp.src(['./src/images/**/*.{jpg,jpeg,png,gif}', '!./src/images/sprite/**/*.png'])
    .pipe(imagemin([
     imageminPng(),
@@ -76,16 +89,15 @@ gulp.task('imagemin', function(done) {
     })
   ]
   ))
-   .pipe(gulp.dest('./dist/assets/images/'))
-   done();
+   .pipe(gulp.dest('./' + Build + '/' + Assets + '/images/'))
 });
 
 // Browser-syncの設定
 // ブラウザ画面への通知を無効化
-gulp.task('sync', function() {
+gulp.task('sync', () => {
   browserSync.init({
     server: {
-      baseDir: './dist/',
+      baseDir: './' + Build + '/',
       index: 'index.html'
     },
     open: 'external',
@@ -93,15 +105,15 @@ gulp.task('sync', function() {
   });
 });
 
-gulp.task('reload', function(done) {
+gulp.task('reload', () => {
   browserSync.reload();
-  done();
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', () => {
   gulp.watch(['./src/scss/**/*.scss'], gulp.task('sass'));
+  gulp.watch(['./src/typescript/**/*.ts'], gulp.task('ts'));
   gulp.watch(['./src/html/**/*.ejs'], gulp.task('ejs'));
-  gulp.watch(['./dist/**/*.html'], gulp.task('reload'));
+  gulp.watch(['./' + Build + '/**/*.html'], gulp.task('reload'));
 });
 
-gulp.task('default', gulp.series( gulp.parallel('sass', 'ejs', 'sync', 'reload', 'watch', 'spritesmith', 'imagemin')));
+gulp.task('default', gulp.series( gulp.parallel('sass', 'ts', 'ejs', 'sync', 'reload', 'watch', 'spritesmith', 'imagemin')));
