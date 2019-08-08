@@ -49,3 +49,17 @@ Gulpをローカル環境にインストールする<br>
 ## 一括で設定する場合は、
  - 1.gulpfile.jsとpackage-lock.jsonとpackage.jsonとsrcディレクトリを配置する。
  - 2.npm installコマンドを実行する。
+
+## バージョン情報
+
+```
+node -v
+v12.8.0
+
+npx -v
+6.10.2
+
+npm -v
+6.10.2
+
+```
