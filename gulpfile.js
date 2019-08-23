@@ -34,7 +34,7 @@ gulp.task('sass', function (done) {
       browsers: ['last 2 version', 'iOS >= 8', 'Android >= 4.1'],
       cascade: false
     }))
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./' + Build + '/' + Assets + '/css/'))
     // CSSファイルのみリロードする
     .pipe(browserSync.stream())
