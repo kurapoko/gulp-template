@@ -1,0 +1,80 @@
+// ********************************************************************************************
+//
+// mixin.scss
+//
+// ********************************************************************************************
+// placeholderのベンダープレフィックス
+@mixin placeholder {
+    &:placeholder-shown {
+        @content;
+    }
+    &::-webkit-input-placeholder {
+        @content;
+    }
+    &:-moz-placeholder {
+        opacity: 1;
+        @content;
+    }
+    &::-moz-placeholder {
+        opacity: 1;
+        @content;
+    }
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+@mixin textImage {
+	display: block;
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+@mixin textIndent {
+	text-indent: -1em;
+	padding-left: 1em;
+}
+// vw計算
+@function get_vw($size, $viewport: 320) {
+	$rate: 100 / $viewport;
+	@return $rate * $size * 1vw;
+}
+@mixin fz_vw($font_size: 10) {
+	font-size: $font_size * 1px;
+	font-size: get_vw($font_size);
+}
+$spaceClass: true !default;
+$endValue: 20 !default;
+@if $spaceClass {
+	@for $i from 0 through $endValue {
+		.pcmt#{$i * 5} {
+			@include pc {
+				margin-top: 5px * $i  !important;
+			}
+		}
+		.spmt#{$i * 5} {
+			@include sp {
+				margin-top: 5px * $i !important;
+			}
+		}
+		.pcmb#{$i * 5} {
+			@include pc {
+				margin-bottom: 5px * $i  !important;
+			}
+		}
+		.spmb#{$i * 5} {
+			@include sp {
+				margin-bottom: 5px * $i !important;
+			}
+		}
+		.mb#{$i * 5} {
+			margin-bottom: 5px * $i !important;
+		}
+		.mt#{$i * 5} {
+			margin-top: 5px * $i !important;
+		}
+		.mle#{$i * 1} {
+			margin-left: 1em * $i !important;
+		}
+	}
+}
+

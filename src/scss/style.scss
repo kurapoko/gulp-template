@@ -10,18 +10,18 @@
 @import "config/reset";
 @import "config/variables";
 @import "config/mediaqueries";
-@import "config/mixin";
 @import "config/base";
 
 // parts
 // -------------------------------------------------------------------
 @import "parts/sprite";
+@import "parts/mixin";
+@import "parts/extend";
 
-// Layout
+// Component
 // -------------------------------------------------------------------
-@import "layout/common";
-@import "layout/header";
-@import "layout/footer";
+@import "component/header";
+@import "component/footer";
 
 
 // pages

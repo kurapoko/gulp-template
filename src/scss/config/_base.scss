@@ -3,13 +3,12 @@
 // base.scss
 //
 // ********************************************************************************************
-*,
 *::before,
 *::after {
 	box-sizing: border-box;
 }
 html {
-  font-size: $BASE_FONT_SIZE;
+	font-size: $BASE_FONT_SIZE;
 }
 body {
 	width: 100%;
@@ -20,12 +19,13 @@ body {
 	font-family: $BASE_FONT_FAMILY;
 }
 a {
-	text-decoration: underline;
 	color: inherit;
+	font-size: inherit;
+	transition: .7s;
 	@include pc {
 		&:hover {
 			opacity: .7;
-			transition: .7s;
+			
 		}
 	}
 }
