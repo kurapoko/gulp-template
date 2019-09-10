@@ -29,10 +29,11 @@ gulp.task('sass', function (done) {
     .pipe(plumber())
     // ソースマップを作成
     .pipe(sourcemaps.init())
-    .pipe(sass({outputStyle: 'expanded'}))
+    .pipe(sass({outputStyle: 'compressed'}))
     .pipe(prefix({
       browsers: ['last 2 version', 'iOS >= 8', 'Android >= 4.1'],
-      cascade: false
+      cascade: false,
+      grid: true
     }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./' + Build + '/' + Assets + '/css/'))
@@ -84,8 +85,8 @@ gulp.task('spritesmith', function ()  {
 
 //画像圧縮(jpg|jpeg|png|gif)
 gulp.task('imagemin', () => {
-   gulp.src(['./src/images/**/*.{jpg,jpeg,png,gif}', '!./src/images/sprite/**/*.png'])
-   .pipe(imagemin([
+  gulp.src(['./src/images/**/*.{jpg,jpeg,png,gif}', '!./src/images/sprite/**/*.png'])
+  .pipe(imagemin([
     imageminPng(),
     imageminJpg(),
     imageminGif({
@@ -95,7 +96,7 @@ gulp.task('imagemin', () => {
     })
   ]
   ))
-   .pipe(gulp.dest('./' + Build + '/' + Assets + '/' + imgDir + '/'))
+  .pipe(gulp.dest('./' + Build + '/' + Assets + '/' + imgDir + '/'))
 });
 
 // Browser-syncの設定
