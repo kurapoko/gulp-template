@@ -84,7 +84,7 @@ gulp.task('spritesmith', function ()  {
 });
 
 //画像圧縮(jpg|jpeg|png|gif)
-gulp.task('imagemin', () => {
+gulp.task('imagemin', (done) => {
   gulp.src(['./src/images/**/*.{jpg,jpeg,png,gif}', '!./src/images/sprite/**/*.png'])
   .pipe(imagemin([
     imageminPng(),
@@ -97,6 +97,7 @@ gulp.task('imagemin', () => {
   ]
   ))
   .pipe(gulp.dest('./' + Build + '/' + Assets + '/' + imgDir + '/'))
+  done();
 });
 
 // Browser-syncの設定
@@ -124,4 +125,4 @@ gulp.task('watch', () => {
   gulp.watch(['./' + Build + '/**/*.html'], gulp.task('reload'));
 });
 
-gulp.task('default', gulp.series( gulp.parallel('sass', 'ejs', 'sync', 'ts', 'reload', 'watch', 'spritesmith', 'imagemin')));
+gulp.task('default', gulp.series( gulp.parallel('sass', 'ejs', 'sync', 'ts', 'reload', 'watch', 'spritesmith')));
