@@ -9,8 +9,16 @@
         background-size: 100%;
         font-size: 80px;
     }
+    &_triangle {
+        @include getTriangle($BASE_BLACK, top, 50, 50);
+    }
+    &_arrow {
+        @include getArrow($BASE_BLACK, top, 50, 50, 10);
+        display: block;
+        background: transparentize(#000000, .8);
+    }
 
-    &__gird {
+    &__grid {
         display: grid;
         grid-template-columns: 630px 354px;
         grid-template-rows: 203px 260px;
@@ -29,4 +37,7 @@
             }
         }
     }
+}
+.marker {
+    @include getUnderline(green, 40);
 }
