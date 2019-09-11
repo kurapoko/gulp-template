@@ -45,6 +45,7 @@ Gulpをローカル環境にインストールする<br>
 
 ## タスクを実行する
     npx gulp
+	npx gulp imagemin(画像圧縮処理)
     
 ## 一括で設定する場合は、
  - 1.gulpfile.jsとpackage-lock.jsonとpackage.jsonとsrcディレクトリを配置する。

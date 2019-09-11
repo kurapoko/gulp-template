@@ -59,7 +59,7 @@
 	}
 }
 
-// 矢印を作る getArrow(色, 矢印の方向, 幅, 高さ, 厚さ) を入力する。
+// 矢印を作る getArrow(色, 矢印の方向, 幅, 高さ, ラインの厚さ) 
 @mixin getArrow($color: #000, $direction: bottom, $width: 6, $height: 6, $thick: 2) {
 	position: relative;
 	&::before {
@@ -83,7 +83,7 @@
 	}
 }
 
-
+// アンダーラインを作る getUnderline(色, アンダーラインの厚さ(パーセント))
 @mixin getUnderline($color, $thick) {
 	$colorThick: $thick*1%;
 	$transparentThick: 100% - $colorThick;

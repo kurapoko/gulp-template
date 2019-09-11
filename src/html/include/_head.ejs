@@ -1,3 +1,11 @@
+<%
+  var _default = json['default'];
+  for ( var key in _default ) {
+    if ( typeof page[key] === 'undefined' ) {
+      page[key] = _default[key];
+    }
+  }
+-%>
 <!DOCTYPE html>
 <html lang="ja">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
@@ -5,8 +13,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<meta property="og:locale" content="ja_JP">
-	<title>Document</title>
+	<title><%= page['title'] %></title>
+	<meta name="description" content="<%= page['description'] %>">
+	<meta name="keywords" content="<%= page['canonical'] %>">
 	<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>

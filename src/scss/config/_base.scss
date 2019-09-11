@@ -34,14 +34,18 @@ a {
 img {
     max-width: 100%;
 }
-button{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    padding: 0;
+button, input[type="submit"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
 }
 ul,ol,li {
 	list-style-type: none;
+}
+em {
+	font-style: normal;
 }

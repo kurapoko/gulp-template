@@ -6,6 +6,7 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const ts = require('gulp-typescript');
 const ejs = require('gulp-ejs');
+const fs = require('fs');
 const rename = require('gulp-rename');
 const prefix  = require('gulp-autoprefixer');
 const plumber = require('gulp-plumber');
@@ -25,8 +26,10 @@ const Build = 'build',
 // SASSの設定
 gulp.task('sass', function (done) {
     gulp.src(['./src/scss/**/*.scss', '!./src/scss/**/_*.scss'])
-    // エラーしても処理を止めない
-    .pipe(plumber())
+    // エラーしても処理を止めない。エラーが発生した場合はデスクトップ通知を行う。
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>")
+    }))
     // ソースマップを作成
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'compressed'}))
@@ -57,9 +60,10 @@ gulp.task('ts', function (done) {
 
 // EJSの設定
 gulp.task('ejs', function (done) {
+    const json = JSON.parse(fs.readFileSync('./src/json/data.json'));
     gulp.src(['./src/html/**/*.ejs', '!./src/html/**/_*.ejs'])
-    .pipe(ejs())
     // 出力時の拡張子をhtmlにする
+    .pipe(ejs({json}))
     .pipe(rename({extname: '.html'}))
     .pipe(gulp.dest('./' + Build + '/'))
     .pipe(browserSync.stream())
