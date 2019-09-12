@@ -16,12 +16,30 @@ const imagemin = require('gulp-imagemin');
 const imageminJpg = require('imagemin-jpeg-recompress');
 const imageminPng = require('imagemin-pngquant');
 const imageminGif = require('imagemin-gifsicle');
+const minimist = require('minimist');
+const gulpIf = require('gulp-if');
 const browserSync = require('browser-sync').create();
 
-// ビルドディレクトリとアセットディレクトリ(状況に応じて書き換え)
-const Build = 'build',
-      Assets = 'assets',
-      imgDir = 'images';
+const options = minimist(process.argv.slice(2), {
+	string: 'env',
+	default: {
+		env: 'develop'
+	}
+});
+
+// develop or production
+const env = options.env;
+
+// ビルドディレクトリ(本番とdev)
+const paths = {
+	develop: 'dev',
+	production: 'prod'
+}
+// アセットディレクトリ(状況に応じて書き換え)
+const Build = 'build';
+const Assets = 'assets';
+const imgDir = 'images';
+
 
 // SASSの設定
 gulp.task('sass', function (done) {
@@ -30,18 +48,46 @@ gulp.task('sass', function (done) {
     .pipe(plumber({
       errorHandler: notify.onError("Error: <%= error.message %>")
     }))
-    // ソースマップを作成
-    .pipe(sourcemaps.init())
-    .pipe(sass({outputStyle: 'compressed'}))
+    // 開発環境でのみソースマップを作成
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        sourcemaps.init()
+      )
+    )
+    // 開発環境でのみcssを最小化
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        sass({ outputStyle: 'expanded' }),
+        sass({ outputStyle: 'compressed' })
+      )
+    )
     .pipe(prefix({
       browsers: ['last 2 version', 'iOS >= 8', 'Android >= 4.1'],
       cascade: false,
       grid: true
     }))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./' + Build + '/' + Assets + '/css/'))
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        sourcemaps.write('./')
+      )
+    )
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        gulp.dest('./' + paths.develop + '/' + Assets + '/css/'),
+        gulp.dest('./' + paths.production + '/' + Assets + '/css/')
+      )
+    )
     // CSSファイルのみリロードする
-    .pipe(browserSync.stream())
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        browserSync.stream()
+      )
+    )
     done();
 });
 
@@ -52,9 +98,20 @@ gulp.task('ts', function (done) {
         target: 'es5',
         removeComments: true
     }))
-    .pipe(gulp.dest('./' + Build + '/' + Assets + '/js/'))
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        gulp.dest('./' + paths.develop + '/' + Assets + '/js/'),
+        gulp.dest('./' + paths.production + '/' + Assets + '/js/')
+      )
+    )
     // jsファイルのみリロードする
-    .pipe(browserSync.stream())
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        browserSync.stream()
+      )
+    )
     done();
 });
 
@@ -65,8 +122,19 @@ gulp.task('ejs', function (done) {
     // 出力時の拡張子をhtmlにする
     .pipe(ejs({json}))
     .pipe(rename({extname: '.html'}))
-    .pipe(gulp.dest('./' + Build + '/'))
-    .pipe(browserSync.stream())
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        gulp.dest('./' + paths.develop + '/'),
+        gulp.dest('./' + paths.production + '/')
+      )
+    )
+    .pipe(
+      gulpIf(
+        env == 'develop',
+        browserSync.stream()
+      )
+    )
     done();
 });
 
@@ -100,7 +168,13 @@ gulp.task('imagemin', (done) => {
     })
   ]
   ))
-  .pipe(gulp.dest('./' + Build + '/' + Assets + '/' + imgDir + '/'))
+  .pipe(
+    gulpIf(
+      env == 'develop',
+      gulp.dest('./' + paths.develop + '/' + Assets + '/' + imgDir + '/'),
+      gulp.dest('./' + paths.production + '/' + Assets + '/' + imgDir + '/')
+    )
+  )
   done();
 });
 
@@ -109,7 +183,7 @@ gulp.task('imagemin', (done) => {
 gulp.task('sync', () => {
   browserSync.init({
     server: {
-      baseDir: './' + Build + '/',
+      baseDir: './' + paths.develop + '/',
       index: 'index.html'
     },
     open: 'external',
@@ -129,4 +203,16 @@ gulp.task('watch', () => {
   gulp.watch(['./' + Build + '/**/*.html'], gulp.task('reload'));
 });
 
-gulp.task('default', gulp.series( gulp.parallel('sass', 'ejs', 'sync', 'ts', 'reload', 'watch', 'spritesmith')));
+gulp.task('default', gulp.series(
+    gulpIf(
+      env == 'develop',
+      gulp.parallel('sass', 'ejs', 'sync', 'ts', 'reload', 'watch', 'spritesmith', 'imagemin'),
+      gulp.parallel('sass', 'ejs', 'ts', 'spritesmith', 'imagemin')
+    )
+));
+
+
+
+
+
+
