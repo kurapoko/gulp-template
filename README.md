@@ -1,55 +1,41 @@
 # gulpテンプレート
-私が普段使用しているgulpのテンプレートファイルをバージョン管理しています。
 
-## 手順  
-- 手順1  
-プロジェクトフォルダにpackage.jsonファイルを作成する。<br>
-	`npm init -y`<br><br>
-- 手順2<br>
-Gulpをローカル環境にインストールする<br>
-	`npm install -D gulp`<br><br>
-- 手順3<br>
-プラグインをインストールする(下記コマンドを参照)
+## 概要
+普段使用しているgulpのテンプレートファイルを管理しています。  
+プラグインを適宜追加し、タスクを改善しています。
 
-## プラグインのインストールコマンド<br>
+## 利用手順  
+ - 1.gulpfile.jsとpackage-lock.jsonとsrcディレクトリを配置する。
+ - 2.npm installコマンドを実行する。
+
+## プラグインのインストールコマンド
 	`npm install -D gulp プラグイン名`
-- sass系<br>
-	`npm install -D gulp gulp-sass`<br>
-	`npm install -D gulp gulp-autoprefixer`<br>
-	`npm install -D gulp gulp-sourcemaps`
-- TypeScript<br>
-	`npm install -D gulp gulp-typescript`
-- json<br>
-	`npm install -D gulp fs`
-- 監視<br>
-	`npm install -D gulp gulp-watch`
-- HTML系<br>
-	`npm install -D gulp gulp-ejs`
-- ブラウザーシンク<br>
-	`npm install -D gulp browser-sync`
-- エラー関連<br>
-	`npm install -D gulp gulp-notify`<br>
-	`npm install -D gulp gulp-plumber`
-- ファイルのリネーム<br>
-	`npm install -D gulp gulp-rename`
-- cssスプライト<br>
-	`npm install -D gulp gulp.spritesmith`<br>
-- 画像圧縮<br>
-	`npm install -D gulp gulp-imagemin`<br>
-	`npm install -D gulp imagemin-jpeg-recompress`<br>
-	`npm install -D gulp imagemin-pngquant`<br>
-	`npm install -D gulp imagemin-gifsicle`
 
-## 上記プラグインを一括インストールするコマンド  
-	npm install -D gulp require-dir gulp-sass gulp-sourcemaps gulp-autoprefixer gulp-watch gulp-plumber gulp-rename gulp-ejs fs browser-sync gulp-notify gulp.spritesmith gulp-imagemin imagemin-jpeg-recompress imagemin-pngquant imagemin-gifsicle
+## プラグイン一覧
+
+| プラグイン名 | 概要 | URL |
+|:-----------|:------------|:------------|
+| browser-sync | ローカルサーバーのリロード | https://www.npmjs.com/package/browser-sync |
+| gulp-sass | Sassの使用 | https://www.npmjs.com/package/gulp-sass |
+| gulp-autoprefixer | Sassにベンダープレフィックスをつける | https://www.npmjs.com/package/gulp-autoprefixer |
+| gulp-sourcemaps | Sassのsourcemapを作成する | https://www.npmjs.com/package/gulp-sourcemaps |
+| gulp-typescript | TypeScriptの使用 | https://www.npmjs.com/package/gulp-typescript |
+| fs | JSONを使うために使用 | https://www.npmjs.com/package/fs |
+| gulp-watch | ファイルの変更を監視する | https://www.npmjs.com/package/gulp-watch |
+| gulp-ejs | テンプレートエンジンのEJSを使用する | https://www.npmjs.com/package/gulp-ejs |
+| gulp-notify | エラーメッセージを通知する | https://www.npmjs.com/package/gulp-notify |
+| gulp-plumber | gulpのエラーが発生しても処理を継続する | https://www.npmjs.com/package/gulp-plumber |
+| gulp.spritesmith | CSSスプライトを作成する | https://www.npmjs.com/package/gulp.spritesmith |
+| gulp-imagemin<br>imagemin-jpeg-recompress<br>imagemin-pngquant<br>imagemin-gifsicle   | 画像を圧縮する | https://www.npmjs.com/package/gulp-imagemin<br>https://www.npmjs.com/package/imagemin-jpeg-recompress<br>https://www.npmjs.com/package/imagemin-pngquant<br>https://www.npmjs.com/package/imagemin-gifsicle |
+| gulp-if | gulpコマンドの中で条件分岐をできるようにする | https://www.npmjs.com/package/gulp-if |
+| minimist | gulpコマンドの中で引数を持たせることができるようにする | https://www.npmjs.com/package/minimist |
+
 
 ## タスクを実行する
-    npx gulp
-	npx gulp imagemin(画像圧縮処理)
-    
-## 一括で設定する場合は、
- - 1.gulpfile.jsとpackage-lock.jsonとpackage.jsonとsrcディレクトリを配置する。
- - 2.npm installコマンドを実行する。
+	npm run dev(ローカルサーバーを立ち上げ、開発環境を起動する)
+	npm run prod(納品用ファイルを作成する)
+	npm run imagemin(画像圧縮処理を実行する)
+
 
 ## バージョン情報
 
