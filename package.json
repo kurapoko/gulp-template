@@ -39,5 +39,10 @@
     "minimist": "^1.2.0",
     "require-dir": "^1.2.0",
     "typescript": "^3.5.2"
+  },
+  "scripts": {
+    "dev": "gulp --env develop",
+    "prod": "gulp --env production",
+    "imagemin": "gulp imagemin"
   }
 }
