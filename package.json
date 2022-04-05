@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "gulp --env develop",
+    "prod": "gulp --env production",
+    "start": "npx gulp",
+    "imagemin": "gulp imagemin"
   },
   "repository": {
     "type": "git",
@@ -18,31 +21,10 @@
   },
   "homepage": "https://github.com/kurapoko/coding#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.5",
-    "fs": "0.0.1-security",
+    "browser-sync": "^2.27.5",
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^6.1.0",
     "gulp-ejs": "^4.0.0",
-    "gulp-if": "^3.0.0",
-    "gulp-imagemin": "^5.0.3",
-    "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.1",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-typescript": "^5.0.1",
-    "gulp-watch": "^5.0.1",
-    "gulp.spritesmith": "^6.9.0",
-    "imagemin-gifsicle": "^6.0.1",
-    "imagemin-jpeg-recompress": "^6.0.0",
-    "imagemin-pngquant": "^7.0.0",
-    "minimist": "^1.2.0",
-    "require-dir": "^1.2.0",
-    "typescript": "^3.5.2"
-  },
-  "scripts": {
-    "dev": "gulp --env develop",
-    "prod": "gulp --env production",
-    "imagemin": "gulp imagemin"
+    "gulp-imagemin": "^7.1.0",
+    "gulp-rename": "^1.4.0"
   }
 }
