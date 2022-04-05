@@ -5,11 +5,12 @@ const html = require('./gulp/tasks/html');
 const server = require('./gulp/tasks/server');
 const image = require('./gulp/tasks/image');
 const css = require('./gulp/tasks/css');
+const script = require('./gulp/tasks/script');
 const reload = require('./gulp/tasks/reload');
 const observe = require('./gulp/tasks/observe');
 
 module.exports = {
-  default: series(image, html, css, observe, server, reload, observe)
+  default: series(image, html, css, script, observe, server, reload, observe)
 }
 
 // 初期設定(プラグインの読み込み)
