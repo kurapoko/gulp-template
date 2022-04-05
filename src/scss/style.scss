@@ -5,25 +5,28 @@
 // ********************************************************************************************
 @charset "utf-8";
 
-// config
+// Foundation
 // -------------------------------------------------------------------
-@import "config/reset";
-@import "config/variables";
-@import "config/mediaqueries";
-@import "config/base";
+@import "foundation/reset";
+@import "foundation/color";
+@import "foundation/variables";
+@import "foundation/mediaqueries";
+@import "foundation/base";
+@import "foundation/mixin";
+@import "foundation/font";
 
-// parts
+// Layout
 // -------------------------------------------------------------------
-@import "parts/sprite";
-@import "parts/mixin";
-@import "parts/extend";
+@import "layout/**";
 
-// Component
+// object
 // -------------------------------------------------------------------
-@import "component/header";
-@import "component/footer";
 
+// object/component
+@import "object/component/**";
 
-// pages
-// -------------------------------------------------------------------
-@import "pages/top";
+// object/project
+@import "object/project/**";
+
+// object/utility
+@import "object/utility/**";

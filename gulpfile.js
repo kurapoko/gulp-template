@@ -4,9 +4,10 @@ const { series, parallel} = require('gulp');
 const html = require('./gulp/tasks/html');
 const server = require('./gulp/tasks/server');
 const image = require('./gulp/tasks/image');
+const css = require('./gulp/tasks/css');
 
 module.exports = {
-  default: series(image, html, server)
+  default: series(image, html, server, css)
 }
 
 // 初期設定(プラグインの読み込み)
