@@ -7,12 +7,13 @@ const browserSync = require('browser-sync').create();
 const { srcDir, destDir } = require('../config');
 
 
-function html() {
+const html = (done) => {
   return src([`${srcDir.html}/**/*.ejs`, `!${srcDir.image}/**/_*.ejs`])
     .pipe(ejs())
     .pipe(rename({extname: '.html'}))
     .pipe(dest(destDir.html))
-    .pipe(browserSync.stream());
+    .pipe(browserSync.stream())
+    done();
 }
 
 task(html);

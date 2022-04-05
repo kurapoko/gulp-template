@@ -1,13 +1,15 @@
 'use strict';
 
-const { series, parallel} = require('gulp');
+const { series } = require('gulp');
 const html = require('./gulp/tasks/html');
 const server = require('./gulp/tasks/server');
 const image = require('./gulp/tasks/image');
 const css = require('./gulp/tasks/css');
+const reload = require('./gulp/tasks/reload');
+const observe = require('./gulp/tasks/observe');
 
 module.exports = {
-  default: series(image, html, server, css)
+  default: series(image, html, css, observe, server, reload, observe)
 }
 
 // 初期設定(プラグインの読み込み)
@@ -148,63 +150,7 @@ module.exports = {
 //     done();
 // });
 
-// // CSS-SPRITE
-// gulp.task('spritesmith', function ()  {
-//   // スプライトにする画像パス
-//   const spriteData = gulp.src(['./src/images/sprite/**/*.png'])
-//   .pipe(spritesmith({
-//     imgName: 'sprite.png', // 生成するスプライト画像の名前
-//     cssName: '_sprite.scss',
-//     imgPath: '/' + Assets + '/' + imgDir + '/sprite.png',
-//     cssFormat: 'scss',
-//     cssVarMap: function (sprite) {
-//       sprite.name = 'sprite-' + sprite.name;
-//     }
-//   }));
-//   spriteData.img.pipe(gulp.dest('./dist/' + Assets + '/' + imgDir + '/'));
-//   spriteData.css.pipe(gulp.dest('./src/scss/parts/'));
-// });
 
-// //画像圧縮(jpg|jpeg|png|gif)
-// gulp.task('imagemin', (done) => {
-//   gulp.src(['./src/images/**/*.{jpg,jpeg,png,gif}', '!./src/images/sprite/**/*.png'])
-//   .pipe(imagemin([
-//     imageminPng(),
-//     imageminJpg(),
-//     imageminGif({
-//         interlaced: false,
-//         optimizationLevel: 3,
-//         colors:180
-//     })
-//   ]
-//   ))
-//   .pipe(
-//     gulpIf(
-//       env == 'develop',
-//       gulp.dest('./' + paths.develop + '/' + Assets + '/' + imgDir + '/'),
-//       gulp.dest('./' + paths.production + '/' + Assets + '/' + imgDir + '/')
-//     )
-//   )
-//   done();
-// });
-
-// // Browser-syncの設定
-// // ブラウザ画面への通知を無効化
-// gulp.task('sync', () => {
-//   browserSync.init({
-//     server: {
-//       baseDir: './' + paths.develop + '/',
-//       index: 'index.html'
-//     },
-//     open: 'external',
-//     reloadOnRestart: true
-//   });
-// });
-
-// gulp.task('reload', function (done)  {
-//   browserSync.reload();
-//   done();
-// });
 
 // gulp.task('watch', () => {
 //   gulp.watch(['./src/scss/**/*.scss'], gulp.task('sass'));
