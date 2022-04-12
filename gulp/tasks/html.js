@@ -8,7 +8,7 @@ const { srcDir, destDir } = require('../config');
 
 
 const html = (done) => {
-  return src([`${srcDir.html}/**/*.ejs`, `!${srcDir.image}/**/_*.ejs`])
+  return src([`${srcDir.html}/**/*.ejs`, `!${srcDir.html}/**/_*.ejs`])
     .pipe(ejs())
     .pipe(rename({extname: '.html'}))
     .pipe(dest(destDir.html))

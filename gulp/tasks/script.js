@@ -1,7 +1,6 @@
 // EJSの設定
 // 初期設定(プラグインの読み込み)
 const {src, dest, task } = require('gulp');
-const autoprefixer = require('gulp-autoprefixer');
 const webpack = require('webpack-stream');
 const browserSync = require('browser-sync');
 const { srcDir, destDir } = require('../config');
@@ -26,7 +25,11 @@ const script = (done) => {
                 loader: 'babel-loader',
               }
             ]
-          }
+          },
+          {
+            test: /\.css$/i,
+            use: ["style-loader", "css-loader"],
+          },
         ]
       },
     })
