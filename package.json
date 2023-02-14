@@ -7,7 +7,7 @@
     "dev": "gulp --env develop",
     "prod": "gulp --env production",
     "start": "npx gulp",
-    "imagemin": "gulp imagemin"
+    "imagemin": "gulp image"
   },
   "repository": {
     "type": "git",
