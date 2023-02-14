@@ -28,7 +28,7 @@
     "css-loader": "^6.7.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
-    "gulp-ejs": "^4.1.2",
+    "gulp-ejs": "^5.1.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-notify": "^4.0.0",
     "gulp-plumber": "^1.2.1",
